@@ -43,13 +43,20 @@ pub fn build_cli() -> App<'static, 'static> {
                     "Generate PowerShell completions",
                 )),
         )
-        .subcommand(SubCommand::with_name("init").arg(arg_replace.clone()).arg(
-            arg_format.clone(),
-        ))
+        .subcommand(
+            SubCommand::with_name("init")
+                .about("Generate configuration file")
+                .arg(arg_replace.clone())
+                .arg(arg_format.clone()),
+        )
         .subcommand(SubCommand::with_name("backup"))
         .subcommand(SubCommand::with_name("apply").arg(arg_replace.clone()))
         .subcommand(SubCommand::with_name("dry-apply").arg(arg_replace.clone()))
-        .subcommand(SubCommand::with_name("show-config").arg(arg_format.clone()))
+        .subcommand(
+            SubCommand::with_name("show-config")
+                .about("Show content of configuration file")
+                .arg(arg_format.clone()),
+        )
 
 }
 
