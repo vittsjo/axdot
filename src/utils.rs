@@ -55,10 +55,9 @@ pub fn is_symbol_link(path: &std::path::Path) -> bool {
 pub fn get_absolute_path(
     path: &std::path::Path,
 ) -> std::result::Result<std::path::PathBuf, String> {
-    match path.canonicalize() {
-        Ok(path) => Ok(path),
-        Err(e) => Err(e.to_string()),
-    }
+    path.canonicalize().map(|path| path).map_err(
+        |e| e.to_string(),
+    )
 }
 
 pub fn create_empty_file(dry: bool, path: &std::path::Path) -> std::result::Result<(), String> {
@@ -67,12 +66,12 @@ pub fn create_empty_file(dry: bool, path: &std::path::Path) -> std::result::Resu
         return Ok(());
     }
 
-    match std::fs::OpenOptions::new().write(true).create(true).open(
-        path,
-    ) {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e.to_string()),
-    }
+    std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .open(path)
+        .map(|_| ())
+        .map_err(|e| e.to_string())
 }
 
 pub fn create_file(
@@ -105,10 +104,9 @@ pub fn create_directory(dry: bool, path: &std::path::Path) -> std::result::Resul
     }
 
     if !path.is_dir() {
-        match std::fs::create_dir_all(path) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e.to_string()),
-        }
+        std::fs::create_dir_all(path).map(|_| ()).map_err(
+            |e| e.to_string(),
+        )
     } else {
         println!("Skipping existing {:?}", path);
         Ok(())
@@ -145,10 +143,11 @@ pub fn create_symlink(
         }
     }
 
-    match std::os::unix::fs::symlink(src, dest) {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e.to_string()),
-    }
+    std::os::unix::fs::symlink(src, dest).map(|_| ()).map_err(
+        |e| {
+            e.to_string()
+        },
+    )
 }
 
 pub fn remove_all(dry: bool, path: &std::path::Path) -> std::result::Result<(), String> {
@@ -156,15 +155,17 @@ pub fn remove_all(dry: bool, path: &std::path::Path) -> std::result::Result<(), 
         return Ok(());
     }
     if path.is_file() || is_symbol_link(path) {
-        match std::fs::remove_file(path.clone()) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e.to_string()),
-        }
+        std::fs::remove_file(path.clone()).map(|_| ()).map_err(
+            |e| {
+                e.to_string()
+            },
+        )
     } else {
-        match std::fs::remove_dir_all(path.clone()) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e.to_string()),
-        }
+        std::fs::remove_dir_all(path.clone()).map(|_| ()).map_err(
+            |e| {
+                e.to_string()
+            },
+        )
     }
 }
 
@@ -198,15 +199,13 @@ pub fn copy_path(
     }
 
     if src.is_file() {
-        match std::fs::copy(src, dest) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e.to_string()),
-        }
+        std::fs::copy(src, dest).map(|_| ()).map_err(
+            |e| e.to_string(),
+        )
     } else {
-        match copy_dir::copy_dir(src, dest) {
-            Ok(_) => Ok(()),
-            Err(errs) => Err(errs.to_string()),
-        }
+        copy_dir::copy_dir(src, dest).map(|_| ()).map_err(
+            |e| e.to_string(),
+        )
     }
 }
 

@@ -61,13 +61,13 @@ pub fn build_cli() -> App<'static, 'static> {
 }
 
 pub fn extract_format(cmd: &clap::ArgMatches) -> ConfigFormat {
-    match cmd.value_of("format") {
-        Some(f) => {
-            match f {
-                "json" => ConfigFormat::JSON,
-                "yaml" | "yml" | _ => ConfigFormat::YAML,
-            }
-        }
-        None => ConfigFormat::YAML,
-    }
+    cmd.value_of("format").map_or(
+        ConfigFormat::YAML,
+        |format| match format
+            .to_lowercase()
+            .as_str() {
+            "json" => ConfigFormat::JSON,
+            "yaml" | "yml" | _ => ConfigFormat::YAML,
+        },
+    )
 }

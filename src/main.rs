@@ -55,24 +55,17 @@ pub fn apply(dry: bool, matches: &clap::ArgMatches, config: &Config) {
         if dry {
             println!("Executing \"{}\"", cmd.join(" "));
         } else {
-            match utils::run_command(cmd) {
-                Ok(cmd) => {
-                    match cmd {
-                        Ok(child) => {
-                            if let Err(e) = child.wait_with_output() {
-                                errln!("{:?}", e);
-                                return;
-                            }
-                        } 
-                        Err(e) => {
-                            errln!("{:?}", e);
-                        }
-                    }
-                }
-                Err(e) => {
-                    errln!("{:?}", e);
-                }
-            }
+            utils::run_command(cmd)
+                .map_err(|e| errln!("{:?}", e))
+                .map(|cmd| {
+                    cmd.map(|child| {
+                        child
+                            .wait_with_output()
+                            .map_err(|e| errln!("{:?}", e))
+                            .unwrap()
+                    }).unwrap()
+                })
+                .unwrap();
         }
     }
 }
@@ -124,15 +117,13 @@ fn main() {
                 return;
             }
 
-            let config = Config::new();
-            match config.save_file(&config_file, config_format) {
-                Ok(()) => {
-                    println!("Created configuration file: {:?}", config_file);
-                }
-                Err(e) => {
-                    println!("{}", e);
-                }
-            }
+            Config::new()
+                .save_file(&config_file, config_format)
+                .map(|_| {
+                    println!("Created configuration file: {:?}", config_file)
+                })
+                .map_err(|e| println!("{}", e))
+                .unwrap();
         }
         _ => {
             let config_file = match matches.value_of("config") {
@@ -177,11 +168,13 @@ fn main() {
 
             match matches.subcommand() {
                 ("show-config", Some(cmd)) => {
-                    let format = cli::extract_format(cmd);
-                    match format {
-                        ConfigFormat::JSON => println!("{}", config.to_json_string()),
-                        ConfigFormat::YAML => println!("{}", config.to_yaml_string()),
-                    }
+                    println!(
+                        "{}",
+                        match cli::extract_format(cmd) {
+                            ConfigFormat::JSON => config.to_json_string(),
+                            ConfigFormat::YAML => config.to_yaml_string(),
+                        }
+                    );
                 }
                 ("backup", Some(_)) => {
                     // TODO

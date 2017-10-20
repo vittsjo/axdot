@@ -38,6 +38,12 @@ pub struct Config {
     pub commands: std::vec::Vec<std::vec::Vec<String>>,
 }
 
+impl Default for Config {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Config {
     pub fn new() -> Self {
         Config {
@@ -58,35 +64,27 @@ impl Config {
     }
 
     pub fn load_file(path: &std::path::Path) -> std::result::Result<Config, String> {
-        match std::fs::File::open(path) {
-            Ok(file) => {
-                match path.extension() {
-                    None => Err(format!("{:?} has extension name", path)),
-                    Some(ext) => {
-                        match ext.to_str() {
-                            None => Err(format!("{:?} is not valid Unicode string", ext)),
-                            Some(ext) => {
-                                match ConfigFormat::from_ext(ext) {
-                                    Some(ConfigFormat::JSON) => {
-                                        match serde_json::from_reader(file) {
-                                            Ok(config) => Ok(config),
-                                            Err(e) => Err(e.to_string()),
-                                        }
-                                    }
-                                    Some(ConfigFormat::YAML) => {
-                                        match serde_yaml::from_reader(file) {
-                                            Ok(config) => Ok(config),
-                                            Err(e) => Err(e.to_string()),
-                                        }
-                                    }
-                                    None => Err(format!("{:?} is not valid Unicode string", ext)),
-                                }
-                            }
-                        }
-                    }                    
-                }
+
+        let file = match std::fs::File::open(path) {
+            Ok(file) => file,
+            Err(e) => {
+                return Err(e.to_string());
             }
-            Err(e) => Err(e.to_string()),
+        };
+
+        let ext = match path.extension() {
+            Some(ext) => ext.to_str().unwrap_or(&""),
+            None => {
+                return Err(format!("{:?} has no extension name", path));
+            } 
+        };
+
+        match ConfigFormat::from_ext(ext) {
+            Some(ConfigFormat::YAML) => serde_yaml::from_reader(file).map_err(|e| e.to_string()),
+            Some(ConfigFormat::JSON) => serde_json::from_reader(file).map_err(|e| e.to_string()),
+            None => {
+                return Err(format!("{:?} is not valid Unicode string", ext));
+            }
         }
     }
 
@@ -97,10 +95,10 @@ impl Config {
                 file.write_all(
                     match format {
                         ConfigFormat::JSON => self.to_json_string(),
-                        ConfigFormat::YAML => self.to_yaml_string(), 
+                        ConfigFormat::YAML => self.to_yaml_string(),
                     }.as_bytes(),
                 )
-            }            
+            }
         }
     }
 }
