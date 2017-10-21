@@ -1,14 +1,15 @@
 [package]
-name = "axdot"
-version = "0.1.0"
 authors = ["user <user@localhost>"]
+name = "axdot"
+version = "0.1.1"
 
 [dependencies]
+clap = "2.26.2"
+copy_dir = "0.1.2"
 errln = "0.1.0"
+lazy_static = "0.2"
 serde = "1.0.15"
 serde_derive = "1.0.15"
 serde_json = "1.0.3"
 serde_yaml = "0.7.1"
-clap = "2.26.2"
-lazy_static = "0.2"
-copy_dir = "0.1.2"
+toml = "0.4.5"
