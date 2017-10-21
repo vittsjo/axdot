@@ -107,7 +107,10 @@ fn main() {
                         ),                
                         ConfigFormat::YAML => std::path::PathBuf::from(
                             format!("{}.yaml", crate_name!()),
-                        ),                
+                        ),
+                        ConfigFormat::TOML => std::path::PathBuf::from(
+                            format!("{}.toml", crate_name!()),
+                        ),
                     }
                 }
             };
@@ -133,11 +136,16 @@ fn main() {
                         std::path::PathBuf::from(format!("{}.yaml", crate_name!()));
                     let default_json_file =
                         std::path::PathBuf::from(format!("{}.json", crate_name!()));
+                    let default_toml_file =
+                        std::path::PathBuf::from(format!("{}.toml", crate_name!()));
+
 
                     if default_yaml_file.exists() {
                         default_yaml_file
                     } else if default_json_file.exists() {
                         default_json_file
+                    } else if default_toml_file.exists() {
+                        default_toml_file
                     } else {
                         errln!("Configuration file does not exist");
                         return;
@@ -173,6 +181,7 @@ fn main() {
                         match cli::extract_format(cmd) {
                             ConfigFormat::JSON => config.to_json_string(),
                             ConfigFormat::YAML => config.to_yaml_string(),
+                            ConfigFormat::TOML => config.to_toml_string(),
                         }
                     );
                 }

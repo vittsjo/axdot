@@ -67,6 +67,7 @@ pub fn extract_format(cmd: &clap::ArgMatches) -> ConfigFormat {
             .to_lowercase()
             .as_str() {
             "json" => ConfigFormat::JSON,
+            "toml" => ConfigFormat::TOML,
             "yaml" | "yml" | _ => ConfigFormat::YAML,
         },
     )
