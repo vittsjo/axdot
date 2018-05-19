@@ -104,7 +104,7 @@ fn main() {
                     match config_format {
                         ConfigFormat::JSON => std::path::PathBuf::from(
                             format!("{}.json", crate_name!()),
-                        ),                
+                        ),
                         ConfigFormat::YAML => std::path::PathBuf::from(
                             format!("{}.yaml", crate_name!()),
                         ),
@@ -150,7 +150,7 @@ fn main() {
                         errln!("Configuration file does not exist");
                         return;
                     }
-                }    
+                }
             };
 
             let config = match Config::load_file(&config_file) {
