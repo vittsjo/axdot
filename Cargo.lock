@@ -18,14 +18,14 @@ dependencies = [
 
 [[package]]
 name = "axdot"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "clap 2.31.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "copy_dir 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "errln 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_derive 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_derive 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.17 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_yaml 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -128,12 +128,12 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.56"
+version = "1.0.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "serde_derive"
-version = "1.0.56"
+version = "1.0.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "proc-macro2 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -148,7 +148,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "dtoa 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "itoa 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -158,7 +158,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "dtoa 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "linked-hash-map 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)",
  "yaml-rust 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -200,7 +200,7 @@ name = "toml"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "serde 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -281,8 +281,8 @@ dependencies = [
 "checksum quote 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "9949cfe66888ffe1d53e6ec9d9f3b70714083854be20fd5e271b232a017401e8"
 "checksum redox_syscall 0.1.37 (registry+https://github.com/rust-lang/crates.io-index)" = "0d92eecebad22b767915e4d529f89f28ee96dbbf5a4810d2b844373f136417fd"
 "checksum redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7e891cfe48e9100a70a3b6eb652fef28920c117d366339687bd5576160db0f76"
-"checksum serde 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)" = "490a3394c94953e6f2613b5c7bd58a4dc02e914b313a750311dcd3a230cd50e9"
-"checksum serde_derive 1.0.56 (registry+https://github.com/rust-lang/crates.io-index)" = "20ea26d857f7763659029de788973b82431ec660b62e4ad9f7bf471701048663"
+"checksum serde 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)" = "9478f147957b713a156ce5e4529d77275bbcfddc29563b794939b36230df8ca8"
+"checksum serde_derive 1.0.57 (registry+https://github.com/rust-lang/crates.io-index)" = "1bdba9c305f1aeff7e83e2ff0685a141780de943cee66bdd89b63913b2b69c86"
 "checksum serde_json 1.0.17 (registry+https://github.com/rust-lang/crates.io-index)" = "f3ad6d546e765177cf3dded3c2e424a8040f870083a0e64064746b958ece9cb1"
 "checksum serde_yaml 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)" = "107bb818146aaf922e7bbcf6a940f1db2f0dcf381779b451e400331b2c6f86db"
 "checksum strsim 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "bb4f380125926a99e52bc279241539c018323fab05ad6368b56f93d9369ff550"

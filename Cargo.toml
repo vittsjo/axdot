@@ -2,6 +2,7 @@
 authors = ["user <user@localhost>"]
 name = "axdot"
 version = "0.1.2"
+description = "A utility that helps you manage your dotfiles"
 
 [dependencies]
 clap = "2.26.2"
